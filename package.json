@@ -1,10 +1,27 @@
 {
   "name": "@xscale/phc-formatter",
+  "description": "A simple package to serialize and deserialize PHC strings",
   "version": "1.0.0",
   "main": "build/index.js",
   "type": "module",
   "author": "xscale, mohitxskull",
   "license": "MIT",
+  "keywords": [
+    "phc",
+    "password",
+    "hash",
+    "format",
+    "serialize",
+    "deserialize"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/XScale-Agency/PHC-Formatter.git"
+  },
   "scripts": {
     "pretest": "yarn lint",
     "clean": "del-cli build",
