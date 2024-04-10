@@ -41,3 +41,25 @@ console.log(parsed)
 //   parameters: { i: 1000, m: 1024, p: 8 }
 // }
 ```
+
+## API
+
+### `serialize(phc: PHC): string`
+
+Serializes a PHC object into a PHC string.
+
+### `deserialize(phc: string): PHC`
+
+Deserializes a PHC string into a PHC object.
+
+### `PHC`
+
+```ts
+type PhcNode = {
+  id: string
+  hash: Uint8Array
+  salt: Uint8Array
+  version?: number
+  parameters?: Record<string, number>
+}
+```
