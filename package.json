@@ -1,7 +1,7 @@
 {
   "name": "@xscale/phc-formatter",
   "description": "A simple package to serialize and deserialize PHC strings",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "build/index.js",
   "type": "module",
   "author": "xscale, mohitxskull",
