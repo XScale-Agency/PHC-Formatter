@@ -45,6 +45,7 @@
     "del-cli": "^5.1.0",
     "eslint": "^9.0.0",
     "prettier": "^3.2.5",
+    "release-it": "^17.1.1",
     "tsup": "^8.0.2",
     "typescript": "^5.4.4",
     "xo": "^0.58.0"
@@ -73,5 +74,10 @@
     "dts": false,
     "sourcemap": true,
     "target": "esnext"
+  },
+  "resolutions": {
+    "string-width": "^4",
+    "strip-ansi": "^4",
+    "wrap-ansi": "^7"
   }
 }
