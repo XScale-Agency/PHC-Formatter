@@ -23,11 +23,11 @@ test.group('PHC Formatter', () => {
       ...options,
     })
 
-    assert.equal(serialized, `$argon2i$v=19$m=120,t=5000,p=2$${hash}$${salt}`)
+    assert.equal(serialized, `$argon2i$v=19$m=120,t=5000,p=2$${salt}$${hash}`)
   })
 
   test('deserialize', ({ assert }) => {
-    const deserialized = PHCFormatter.deserialize(`$argon2i$v=19$m=120,t=5000,p=2$${hash}$${salt}`)
+    const deserialized = PHCFormatter.deserialize(`$argon2i$v=19$m=120,t=5000,p=2$${salt}$${hash}`)
 
     assert.deepEqual(deserialized, {
       id: 'argon2i',
@@ -54,11 +54,11 @@ test.group('PHC Formatter', () => {
       },
     })
 
-    assert.equal(serialized, `$argon2i$m=120,t=5000,p=2$${hash}$${salt}`)
+    assert.equal(serialized, `$argon2i$m=120,t=5000,p=2$${salt}$${hash}`)
   })
 
   test('deserialize with no version', ({ assert }) => {
-    const deserialized = PHCFormatter.deserialize(`$argon2i$m=120,t=5000,p=2$${hash}$${salt}`)
+    const deserialized = PHCFormatter.deserialize(`$argon2i$m=120,t=5000,p=2$${salt}$${hash}`)
 
     assert.deepEqual(deserialized, {
       id: 'argon2i',
@@ -81,11 +81,11 @@ test.group('PHC Formatter', () => {
       version: 19,
     })
 
-    assert.equal(serialized, `$argon2i$v=19$${hash}$${salt}`)
+    assert.equal(serialized, `$argon2i$v=19$${salt}$${hash}`)
   })
 
   test('deserialize with no parameters', ({ assert }) => {
-    const deserialized = PHCFormatter.deserialize(`$argon2i$v=19$${hash}$${salt}`)
+    const deserialized = PHCFormatter.deserialize(`$argon2i$v=19$${salt}$${hash}`)
 
     assert.deepEqual(deserialized, {
       id: 'argon2i',
@@ -103,11 +103,11 @@ test.group('PHC Formatter', () => {
       id: 'argon2i',
     })
 
-    assert.equal(serialized, `$argon2i$${hash}$${salt}`)
+    assert.equal(serialized, `$argon2i$${salt}$${hash}`)
   })
 
   test('deserialize with no parameters or version', ({ assert }) => {
-    const deserialized = PHCFormatter.deserialize(`$argon2i$${hash}$${salt}`)
+    const deserialized = PHCFormatter.deserialize(`$argon2i$${salt}$${hash}`)
 
     assert.deepEqual(deserialized, {
       id: 'argon2i',

@@ -58,9 +58,7 @@ export const serialize = (options: {
         .join(',')}`
     : ''
 
-  return `$${options.id}${version}${parameters}$${options.hash
-    .toString('base64')
-    .replace(/=+$/, '')}$${options.salt.toString('base64').replace(/=+$/, '')}`
+  return `$${options.id}${version}${parameters}$${options.salt.toString('base64').replace(/=+$/, '')}$${options.hash.toString('base64').replace(/=+$/, '')}`
 }
 
 /**
@@ -90,16 +88,16 @@ export const deserialize = (phc: string): PhcNode => {
     throw new TypeError(`id is required`)
   }
 
-  const salt = Buffer.from(parts.pop() ?? '', 'base64')
-
-  if (!Buffer.isBuffer(salt)) {
-    throw new TypeError(`salt must be a buffer`)
-  }
-
   const hash = Buffer.from(parts.pop() ?? '', 'base64')
 
   if (!Buffer.isBuffer(hash)) {
     throw new TypeError(`hash must be a buffer`)
+  }
+
+  const salt = Buffer.from(parts.pop() ?? '', 'base64')
+
+  if (!Buffer.isBuffer(salt)) {
+    throw new TypeError(`salt must be a buffer`)
   }
 
   if (parts.length === 0) {
