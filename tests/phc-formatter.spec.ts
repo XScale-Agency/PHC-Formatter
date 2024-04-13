@@ -47,18 +47,29 @@ test.group('PHC Formatter', () => {
       hash: Buffer.from(hash, 'base64'),
       salt: Buffer.from(salt, 'base64'),
       id: 'argon2i',
+      parameters: {
+        m: 120,
+        t: 5000,
+        p: 2,
+      },
     })
 
-    assert.equal(serialized, `$argon2i$${hash}$${salt}`)
+    assert.equal(serialized, `$argon2i$m=120,t=5000,p=2$${hash}$${salt}`)
   })
 
   test('deserialize with no version', ({ assert }) => {
-    const deserialized = PHCFormatter.deserialize(`$argon2i$${hash}$${salt}`)
+    const deserialized = PHCFormatter.deserialize(`$argon2i$m=120,t=5000,p=2$${hash}$${salt}`)
 
     assert.deepEqual(deserialized, {
       id: 'argon2i',
       hash: Buffer.from(hash, 'base64'),
       salt: Buffer.from(salt, 'base64'),
+      parameters: {
+        m: 120,
+        t: 5000,
+        p: 2,
+      },
+      version: undefined,
     })
   })
 
@@ -81,6 +92,7 @@ test.group('PHC Formatter', () => {
       hash: Buffer.from(hash, 'base64'),
       salt: Buffer.from(salt, 'base64'),
       version: 19,
+      parameters: undefined,
     })
   })
 

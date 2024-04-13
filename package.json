@@ -14,6 +14,12 @@
     "serialize",
     "deserialize"
   ],
+  "files": [
+    "build/index.d.ts",
+    "build/index.js",
+    "build/index.js.map",
+    "build/src/types.d.ts"
+  ],
   "publishConfig": {
     "access": "public",
     "tag": "latest"

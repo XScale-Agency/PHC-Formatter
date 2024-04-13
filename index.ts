@@ -106,39 +106,46 @@ export const deserialize = (phc: string): PhcNode => {
     return { id, hash, salt }
   }
 
-  const version = parts.shift()
+  const _parseParameters = (parameters: string) => {
+    const result: Record<string, number> = {}
 
-  if (version && !versionRegex.test(version)) {
-    throw new TypeError(`version must be a number`)
-  } else if (!version) {
-    throw new TypeError(`version is required`)
-  }
+    for (const part of parameters.split(',')) {
+      const [key, value] = part.split('=')
 
-  const versionInt = Number.parseInt(version.slice(2), 10)
+      if (!nameRegex.test(key)) {
+        throw new TypeError(`parameters key must be a string of 1-32 characters`)
+      }
 
-  const parameters = parts.shift()
+      if (!decimalRegex.test(value)) {
+        throw new TypeError(`parameters value must be a number`)
+      }
 
-  if (!parameters) {
-    return { id, hash, salt, version: versionInt }
-  }
-
-  const parameterParts = parameters.split(',')
-
-  const parameterObject: Record<string, number> = {}
-
-  for (const part of parameterParts) {
-    const [key, value] = part.split('=')
-
-    if (!nameRegex.test(key)) {
-      throw new TypeError(`parameters key must be a string of 1-32 characters`)
+      result[key] = Number.parseInt(value, 10)
     }
 
-    if (!decimalRegex.test(value)) {
-      throw new TypeError(`parameters value must be a number`)
-    }
-
-    parameterObject[key] = Number.parseInt(value, 10)
+    return result
   }
 
-  return { id, hash, salt, version: versionInt, parameters: parameterObject }
+  const _parsePart = (part: string | undefined) => {
+    if (part) {
+      if (versionRegex.test(part)) {
+        version = Number.parseInt(part.slice(2), 10)
+      } else {
+        parameters = _parseParameters(part)
+      }
+    }
+  }
+
+  let version: number | undefined
+  let parameters: Record<string, number> | undefined
+
+  _parsePart(parts.shift())
+
+  if (parts.length === 0) {
+    return { id, hash, salt, version, parameters }
+  }
+
+  _parsePart(parts.shift())
+
+  return { id, hash, salt, version, parameters }
 }
